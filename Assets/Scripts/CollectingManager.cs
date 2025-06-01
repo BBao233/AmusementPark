@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class CollectingManager : MonoBehaviour
 {
+    [Header("音效设置")]
+    public AudioClip interactionSound;  // 交互音效
+    [Range(0f, 1f)] public float volume = 1f;  // 音量控制滑块
+    private AudioSource audioSource;    // 音频源组件
+
     // 单例模式
     public static CollectingManager Instance { get; private set; }
 
@@ -15,6 +20,13 @@ public class CollectingManager : MonoBehaviour
     public event Action OnAllItemsCollected;
     // 收集进度更新事件
     public event Action<int> OnCollectionProgressUpdated;
+
+    void Start()
+    {
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.playOnAwake = false;
+        audioSource.volume = volume;
+    }
 
     private void Awake()
     {
@@ -43,6 +55,11 @@ public class CollectingManager : MonoBehaviour
         {
             collectedItems[type] = true;
             Debug.Log($"收集物品: {type}");
+
+            if (interactionSound != null)
+            {
+                audioSource.PlayOneShot(interactionSound, volume);
+            }
 
             // 获取当前收集进度
             int currentCount = CollectedCount;
