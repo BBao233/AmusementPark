@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+using UnityEngine.Events;
+using System.Collections;
 
 public class FemaleSwitchController : MonoBehaviour
 {
@@ -43,12 +45,43 @@ public class FemaleSwitchController : MonoBehaviour
     [Range(0f, 1f)] public float volume = 1f;  // 音量控制滑块
     private AudioSource audioSource;    // 音频源组件
 
+    [Header("新增：对话框设置")]
+    public bool showDialogOnInteract = true; // 是否在交互时显示对话框
+    public string dialogTitle = "提示"; // 对话框标题
+    [TextArea(3, 10)] public string dialogContent = "操作成功！"; // 对话框内容
+    public float dialogDisplayTime = 3f; // 对话框显示时间（秒），0表示不自动关闭
+    public Color dialogBackgroundColor = new Color(0, 0, 0, 0.8f); // 对话框背景颜色
+    public Color dialogTitleColor = Color.white; // 标题颜色
+    public Color dialogContentColor = Color.white; // 内容颜色
+    public float dialogWidth = 350f; // 对话框宽度
+    public float dialogHeight = 200f; // 对话框高度
+    public float dialogOffsetY = 1.5f; // 对话框Y轴偏移量
+
+    [Header("雨系统设置")]
+    public RainSystem rainSystem; // 拖入场景中的雨系统对象
+    public float rainDuration = 5f; // 下雨持续时间，可调整
+
+    [Header("对话框按钮设置")]
+    public string button1Text = "选项一";
+    public string button2Text = "选项二";
+    public int correctButtonIndex = 1; // 1=按钮1正确, 2=按钮2正确
+    public UnityEvent onCorrectChoice; // 选择正确选项时触发的事件
+    public UnityEvent onIncorrectChoice; // 选择错误选项时触发的事件
+
     private GameObject interactionPrompt;  // 交互提示UI
+    private GameObject dialogUI; // 对话框UI
+    private Text dialogTitleText; // 对话框标题文本
+    private Text dialogContentText; // 对话框内容文本
+    private Button button1; // 对话框按钮1
+    private Button button2; // 对话框按钮2
     private bool playerInRange;
     private bool mapsActivated = false;   // 记录地图是否已激活
     private SpriteRenderer switchRenderer; // 开关的精灵渲染器
     private Vector3 originalScale;         // 原始缩放比例
     private bool isScaling = false;        // 是否正在缩放
+    private float dialogDisplayTimer = 0f; // 对话框显示计时器
+    private bool dialogActive = false; // 对话框是否激活
+
 
     void Start()
     {
@@ -108,6 +141,9 @@ public class FemaleSwitchController : MonoBehaviour
 
         // 更新缩放动画
         UpdateScaling();
+
+        // 更新对话框计时器
+        UpdateDialogTimer();
     }
 
     void CheckPlayerInRange()
@@ -162,9 +198,21 @@ public class FemaleSwitchController : MonoBehaviour
         // 隐藏提示UI
         UpdatePromptVisibility();
 
+        // 显示对话框
+        if (showDialogOnInteract)
+        {
+            ShowDialog();
+        }
+
         if (interactionSound != null)
         {
             audioSource.PlayOneShot(interactionSound, volume);
+        }
+
+        // 显示对话框
+        if (showDialogOnInteract && !dialogActive)
+        {
+            ShowDialog();
         }
 
         Debug.Log("瓦片地图和GameObjects已激活");
@@ -325,12 +373,315 @@ public class FemaleSwitchController : MonoBehaviour
         rectTransform.position = screenPosition;
     }
 
+    // 新增：显示对话框
+    void ShowDialog()
+    {
+        Debug.Log("显示对话框");
+        dialogActive = true;
+
+        // 如果对话框已存在，先销毁
+        if (dialogUI != null)
+        {
+            Destroy(dialogUI);
+        }
+
+        // 创建Canvas
+        GameObject canvasObject = GameObject.Find("MainCanvas");
+        if (canvasObject == null)
+        {
+            Debug.Log("未找到MainCanvas，创建新的Canvas");
+            canvasObject = new GameObject("MainCanvas");
+            Canvas canvas = canvasObject.AddComponent<Canvas>();
+            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            canvasObject.AddComponent<CanvasScaler>();
+            canvasObject.AddComponent<GraphicRaycaster>();
+            Debug.Log("新Canvas创建完成");
+        }
+        else
+        {
+            Debug.Log("找到现有MainCanvas");
+        }
+
+        // 创建对话框根对象
+        dialogUI = new GameObject("DialogUI");
+        dialogUI.transform.SetParent(canvasObject.transform);
+
+        // 创建背景图像
+        Image backgroundImage = dialogUI.AddComponent<Image>();
+        backgroundImage.color = dialogBackgroundColor;
+
+        // 设置RectTransform
+        RectTransform dialogRect = dialogUI.GetComponent<RectTransform>();
+        dialogRect.sizeDelta = new Vector2(dialogWidth, dialogHeight);
+
+        // 创建标题文本
+        GameObject titleObject = new GameObject("DialogTitle");
+        titleObject.transform.SetParent(dialogUI.transform);
+        dialogTitleText = titleObject.AddComponent<Text>();
+        dialogTitleText.text = dialogTitle;
+
+        // 使用指定的自定义字体
+        if (customFont != null)
+        {
+            dialogTitleText.font = customFont;
+        }
+        else
+        {
+            dialogTitleText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+        }
+
+        dialogTitleText.fontSize = (int)(promptFontSize * 1.2f); // 标题字体稍大
+        dialogTitleText.color = dialogTitleColor;
+        dialogTitleText.alignment = TextAnchor.MiddleCenter;
+
+        // 设置标题RectTransform
+        RectTransform titleRect = titleObject.GetComponent<RectTransform>();
+        titleRect.anchorMin = new Vector2(0, 0.8f);
+        titleRect.anchorMax = new Vector2(1, 1);
+        titleRect.offsetMin = Vector2.zero;
+        titleRect.offsetMax = Vector2.zero;
+
+        // 创建内容文本
+        GameObject contentObject = new GameObject("DialogContent");
+        contentObject.transform.SetParent(dialogUI.transform);
+        dialogContentText = contentObject.AddComponent<Text>();
+        dialogContentText.text = dialogContent;
+
+        // 使用指定的自定义字体
+        if (customFont != null)
+        {
+            dialogContentText.font = customFont;
+        }
+        else
+        {
+            dialogContentText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+        }
+
+        dialogContentText.fontSize = (int)promptFontSize;
+        dialogContentText.color = dialogContentColor;
+        dialogContentText.alignment = TextAnchor.MiddleCenter;
+        dialogContentText.horizontalOverflow = HorizontalWrapMode.Wrap;
+        dialogContentText.verticalOverflow = VerticalWrapMode.Truncate;
+
+        // 设置内容RectTransform
+        RectTransform contentRect = contentObject.GetComponent<RectTransform>();
+        contentRect.anchorMin = new Vector2(0.05f, 0.4f);
+        contentRect.anchorMax = new Vector2(0.95f, 0.75f);
+        contentRect.offsetMin = new Vector2(10, 10);
+        contentRect.offsetMax = new Vector2(-10, -10);
+
+        // 创建按钮1
+        GameObject button1Object = new GameObject("Button1");
+        button1Object.transform.SetParent(dialogUI.transform);
+        button1 = button1Object.AddComponent<Button>();
+        button1.onClick.AddListener(() => OnButtonClicked(1));
+
+        // 添加按钮背景
+        Image button1Image = button1Object.AddComponent<Image>();
+        button1Image.color = new Color(0.8f, 0.8f, 0.8f, 1f);
+
+        // 设置按钮文本
+        GameObject button1TextObject = new GameObject("ButtonText");
+        button1TextObject.transform.SetParent(button1Object.transform);
+        Text button1Text = button1TextObject.AddComponent<Text>();
+        button1Text.text = this.button1Text;
+
+        // 使用指定的自定义字体
+        if (customFont != null)
+        {
+            button1Text.font = customFont;
+        }
+        else
+        {
+            button1Text.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+        }
+
+        button1Text.fontSize = (int)(promptFontSize * 0.9f);
+        button1Text.color = Color.black;
+        button1Text.alignment = TextAnchor.MiddleCenter;
+
+        // 设置按钮1 RectTransform
+        RectTransform button1Rect = button1Object.GetComponent<RectTransform>();
+        button1Rect.anchorMin = new Vector2(0.1f, 0.1f);
+        button1Rect.anchorMax = new Vector2(0.45f, 0.3f);
+        button1Rect.offsetMin = new Vector2(5, 5);
+        button1Rect.offsetMax = new Vector2(-5, -5);
+
+        // 设置按钮文本RectTransform
+        RectTransform button1TextRect = button1TextObject.GetComponent<RectTransform>();
+        button1TextRect.anchorMin = Vector2.zero;
+        button1TextRect.anchorMax = Vector2.one;
+        button1TextRect.offsetMin = Vector2.zero;
+        button1TextRect.offsetMax = Vector2.zero;
+
+        // 创建按钮2
+        GameObject button2Object = new GameObject("Button2");
+        button2Object.transform.SetParent(dialogUI.transform);
+        button2 = button2Object.AddComponent<Button>();
+        button2.onClick.AddListener(() => OnButtonClicked(2));
+
+        // 添加按钮背景
+        Image button2Image = button2Object.AddComponent<Image>();
+        button2Image.color = new Color(0.8f, 0.8f, 0.8f, 1f);
+
+        // 设置按钮文本
+        GameObject button2TextObject = new GameObject("ButtonText");
+        button2TextObject.transform.SetParent(button2Object.transform);
+        Text button2Text = button2TextObject.AddComponent<Text>();
+        button2Text.text = this.button2Text;
+
+        // 使用指定的自定义字体
+        if (customFont != null)
+        {
+            button2Text.font = customFont;
+        }
+        else
+        {
+            button2Text.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+        }
+
+        button2Text.fontSize = (int)(promptFontSize * 0.9f);
+        button2Text.color = Color.black;
+        button2Text.alignment = TextAnchor.MiddleCenter;
+
+        // 设置按钮2 RectTransform
+        RectTransform button2Rect = button2Object.GetComponent<RectTransform>();
+        button2Rect.anchorMin = new Vector2(0.55f, 0.1f);
+        button2Rect.anchorMax = new Vector2(0.9f, 0.3f);
+        button2Rect.offsetMin = new Vector2(5, 5);
+        button2Rect.offsetMax = new Vector2(-5, -5);
+
+        // 设置按钮文本RectTransform
+        RectTransform button2TextRect = button2TextObject.GetComponent<RectTransform>();
+        button2TextRect.anchorMin = Vector2.zero;
+        button2TextRect.anchorMax = Vector2.one;
+        button2TextRect.offsetMin = Vector2.zero;
+        button2TextRect.offsetMax = Vector2.zero;
+
+        // 更新对话框位置
+        UpdateDialogPosition();
+
+        // 启动对话框计时器
+        if (dialogDisplayTime > 0)
+        {
+            dialogDisplayTimer = dialogDisplayTime;
+        }
+
+        Debug.Log("对话框创建完成");
+    }
+
+    // 按钮点击事件处理
+    void OnButtonClicked(int buttonIndex)
+    {
+        Debug.Log($"按钮 {buttonIndex} 被点击");
+
+        if (buttonIndex == correctButtonIndex)
+        {
+            Debug.Log("选择了正确选项");
+            onCorrectChoice?.Invoke();
+        }
+        else
+        {
+            Debug.Log("选择了错误选项");
+            onIncorrectChoice?.Invoke();
+            TriggerRain();
+        }
+
+        HideDialog();
+    }
+
+    // 新增：隐藏对话框
+    void HideDialog()
+    {
+        if (dialogUI != null)
+        {
+            Destroy(dialogUI);
+            dialogUI = null;
+            dialogActive = false;
+            Debug.Log("对话框已关闭");
+        }
+    }
+
+    // 新增：更新对话框位置
+    void UpdateDialogPosition()
+    {
+        if (dialogUI == null)
+        {
+            Debug.LogWarning("尝试更新对话框位置，但对话框UI为空");
+            return;
+        }
+
+        // 确保相机存在
+        if (Camera.main == null)
+        {
+            Debug.LogError("找不到主相机，无法更新对话框位置");
+            return;
+        }
+
+        // 将世界坐标转换为屏幕坐标
+        Vector3 screenPosition = Camera.main.WorldToScreenPoint(
+            transform.position + new Vector3(0, dialogOffsetY, 0));
+
+        // 更新UI位置
+        RectTransform dialogRect = dialogUI.GetComponent<RectTransform>();
+        dialogRect.anchorMin = new Vector2(0.5f, 0.5f);
+        dialogRect.anchorMax = new Vector2(0.5f, 0.5f);
+        dialogRect.anchoredPosition = Vector2.zero;
+    }
+
+    // 新增：更新对话框计时器
+    void UpdateDialogTimer()
+    {
+        if (dialogDisplayTimer > 0)
+        {
+            dialogDisplayTimer -= Time.deltaTime;
+            if (dialogDisplayTimer <= 0 && dialogUI != null)
+            {
+                Debug.Log("对话框超时，自动选择错误");
+                onIncorrectChoice?.Invoke();
+                TriggerRain(); // 添加触发雨
+                HideDialog();
+            }
+        }
+    }
+
+    void TriggerRain()
+    {
+        if (rainSystem == null)
+        {
+            // 尝试自动查找
+            rainSystem = FindObjectOfType<RainSystem>();
+            if (rainSystem == null)
+            {
+                Debug.LogError("场景中未找到RainSystem！");
+                return;
+            }
+        }
+
+        // 确保雨系统已启用
+        if (!rainSystem.gameObject.activeInHierarchy)
+        {
+            rainSystem.gameObject.SetActive(true);
+        }
+
+        rainSystem.rainDuration = this.rainDuration;
+        rainSystem.StartRain();
+
+        Debug.Log($"已触发下雨，持续{rainDuration}秒");
+    }
+
     void LateUpdate()
     {
         // 确保提示位置跟随开关
         if (interactionPrompt != null && interactionPrompt.activeSelf)
         {
             UpdatePromptPosition();
+        }
+
+        // 确保对话框位置跟随开关
+        if (dialogUI != null)
+        {
+            UpdateDialogPosition();
         }
     }
 
