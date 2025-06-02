@@ -1,28 +1,27 @@
 using UnityEngine;
 using UnityEngine.UI;
-
 public class PollutionTrigger : MonoBehaviour
 {
-    // 污染面板组件（Screen Space - Overlay）
-    public GameObject pollutionPanel; // 全屏污染面板
+    public GameObject pollutionPanel; // 全屏污染面板（由Trigger控制显示）
     public Image pollutionImage;      // 污染图片组件
-
-    // 要隐藏的对话框部分
-    public GameObject dialogPanel;    // 整个对话UI的根对象
-
+    public GameObject dialogPanel;    // 要隐藏的对话框
     public void OnYesButtonClicked()
     {
-        // 显示污染图片
-        if (pollutionPanel != null && pollutionImage != null)
-        {
-            pollutionPanel.SetActive(true);
-            pollutionImage.color = new Color(pollutionImage.color.r, pollutionImage.color.g, pollutionImage.color.b, 1f);
-        }
-
-        // 隐藏对话框
+        // 1. 先隐藏对话框
         if (dialogPanel != null)
-        {
             dialogPanel.SetActive(false);
+        // 2. 显示污染面板（由Trigger完全控制）
+        if (pollutionPanel != null)
+            pollutionPanel.SetActive(true);
+        // 3. 启动污染效果（确保面板已显示后调用）
+        if (pollutionImage != null)
+        {
+            PollutionEffectController controller =
+                pollutionImage.GetComponent<PollutionEffectController>();
+            if (controller != null)
+            {
+                controller.StartPollution(); // 触发污染效果
+            }
         }
     }
 }
