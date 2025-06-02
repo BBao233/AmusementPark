@@ -23,6 +23,9 @@ public class FemaleSwitchController : MonoBehaviour
     public float promptFontSize = 16f;  // 文本字体大小
     public bool alwaysShowPrompt = true;  // 新增：是否始终显示提示
 
+    [Header("字体设置")]
+    public Font customFont; // 新增：自定义字体字段
+
     [Header("新增：开关图像设置")]
     public Sprite activeSprite;         // 激活状态的精灵图像
     public Sprite inactiveSprite;       // 未激活状态的精灵图像
@@ -264,54 +267,18 @@ public class FemaleSwitchController : MonoBehaviour
         Text textComponent = interactionPrompt.AddComponent<Text>();
         textComponent.text = promptText;
 
-        // 确保字体存在 - 改进的字体加载逻辑
-        Font loadedFont = null;
-
-        // 尝试加载已知的内置字体
-        string[] fontCandidates = {
-            "Arial.ttf",              // 旧版本Unity支持
-            "LegacyRuntime.ttf",      // 新版本Unity支持
-            "Arial"                   // 直接使用字体名称
-        };
-
-        foreach (string fontName in fontCandidates)
+        // 使用指定的自定义字体
+        if (customFont != null)
         {
-            try
-            {
-                // 先尝试使用资源路径加载
-                loadedFont = Resources.GetBuiltinResource<Font>(fontName);
-                if (loadedFont != null)
-                {
-                    Debug.Log($"成功加载字体: {fontName}");
-                    break;
-                }
-
-                // 如果路径加载失败，尝试直接使用字体名称
-                if (fontName.EndsWith(".ttf"))
-                {
-                    string plainFontName = fontName.Substring(0, fontName.Length - 4);
-                    loadedFont = Font.CreateDynamicFontFromOSFont(plainFontName, (int)promptFontSize);
-                    if (loadedFont != null)
-                    {
-                        Debug.Log($"成功通过字体名称加载: {plainFontName}");
-                        break;
-                    }
-                }
-            }
-            catch (System.Exception e)
-            {
-                Debug.LogWarning($"尝试加载字体 {fontName} 失败: {e.Message}");
-            }
+            textComponent.font = customFont;
+            Debug.Log($"使用自定义字体: {customFont.name}");
+        }
+        else
+        {
+            Debug.LogWarning("未指定自定义字体，使用默认字体");
+            textComponent.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
         }
 
-        // 如果所有尝试都失败，使用默认字体
-        if (loadedFont == null)
-        {
-            Debug.LogError("无法加载任何内置字体，使用默认字体");
-            loadedFont = Resources.GetBuiltinResource<Font>("Arial.ttf"); // 这可能会失败，但Unity会提供默认字体
-        }
-
-        textComponent.font = loadedFont;
         textComponent.fontSize = (int)promptFontSize;
         textComponent.color = promptColor;
         textComponent.alignment = TextAnchor.MiddleCenter;

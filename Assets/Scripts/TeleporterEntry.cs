@@ -18,6 +18,9 @@ public class TeleporterEntry : MonoBehaviour
     public float promptOffsetY = 1.2f;
     public float promptFontSize = 16f;
 
+    [Header("字体设置")]
+    public Font customFont; // 新增：自定义字体字段
+
     [Header("音效设置")]
     public AudioClip interactionSound;  // 交互音效
     [Range(0f, 1f)] public float volume = 1f;  // 音量控制滑块
@@ -200,15 +203,24 @@ public class TeleporterEntry : MonoBehaviour
         textComponent.fontSize = (int)promptFontSize;
         textComponent.alignment = TextAnchor.MiddleCenter;
 
-        // 使用改进的字体加载逻辑
-        Font loadedFont = LoadFont();
-        if (loadedFont != null)
+        // 优先使用自定义字体
+        if (customFont != null)
         {
-            textComponent.font = loadedFont;
+            textComponent.font = customFont;
+            Debug.Log($"使用自定义字体: {customFont.name}");
         }
         else
         {
-            Debug.LogWarning("字体加载失败，使用默认字体");
+            // 使用改进的字体加载逻辑
+            Font loadedFont = LoadFont();
+            if (loadedFont != null)
+            {
+                textComponent.font = loadedFont;
+            }
+            else
+            {
+                Debug.LogWarning("字体加载失败，使用默认字体");
+            }
         }
 
         // 设置RectTransform

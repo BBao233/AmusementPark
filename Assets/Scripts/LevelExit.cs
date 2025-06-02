@@ -8,6 +8,9 @@ public class LevelExit : MonoBehaviour
     public string nextSceneName = "Level2"; // 下一关场景名称
     public KeyCode interactKey1 = KeyCode.E, interactKey2 = KeyCode.L; // 交互按键
 
+    [Header("字体设置")]
+    public Font customFont; // 新增：自定义字体字段
+
     [Header("提示UI设置")]
     public bool createPromptUI = true;
     public string promptText = "前往下一关";
@@ -181,8 +184,25 @@ public class LevelExit : MonoBehaviour
         textComponent.alignment = TextAnchor.MiddleCenter;
 
         // 使用改进的字体加载逻辑
-        Font loadedFont = LoadFont();
-        textComponent.font = loadedFont;
+        // 优先使用自定义字体
+        if (customFont != null)
+        {
+            textComponent.font = customFont;
+            Debug.Log($"使用自定义字体: {customFont.name}");
+        }
+        else
+        {
+            // 使用改进的字体加载逻辑
+            Font loadedFont = LoadFont();
+            if (loadedFont != null)
+            {
+                textComponent.font = loadedFont;
+            }
+            else
+            {
+                Debug.LogWarning("字体加载失败，使用默认字体");
+            }
+        }
 
         // 设置RectTransform
         RectTransform rectTransform = promptUI.GetComponent<RectTransform>();
