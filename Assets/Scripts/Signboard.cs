@@ -5,7 +5,6 @@ public class Signboard : MonoBehaviour
     [TextArea(3, 10)]
     public string signMessage = "这是一则重要通知！";
     public Text displayText;
-
     // 新增：UI面板引用，用于整体定位
     public RectTransform uiPanel;
     // 新增：UI相对于告示牌的偏移量
