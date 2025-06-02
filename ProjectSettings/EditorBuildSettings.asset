@@ -7,5 +7,11 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/Lobby.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
+    guid: 9303657de8bce4e4d890ec5d72d8f456
+  - enabled: 1
+    path: Assets/Scenes/scene1.unity
+    guid: 93755c3d0ff9648469e9b22415845b43
+  - enabled: 1
+    path: Assets/Scenes/Maze.unity
+    guid: 21faf0e0a4b9ad24cb9c58630563dd72
   m_configObjects: {}
