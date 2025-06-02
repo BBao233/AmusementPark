@@ -4,8 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Female
-  - Male
+  - Ground
+  - enemy
   layers:
   - Default
   - TransparentFX
@@ -13,7 +13,7 @@ TagManager:
   - 
   - Water
   - UI
-  - Player
+  - ground
   - 
   - 
   - 
@@ -42,7 +42,4 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: New Layer 1
-    uniqueID: 3584119775
     locked: 0
