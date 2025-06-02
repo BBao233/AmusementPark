@@ -2055,7 +2055,7 @@ Transform:
   m_GameObject: {fileID: 364484287}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.29, y: -3.31, z: 0}
+  m_LocalPosition: {x: -3.81, y: -0.72, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6089,7 +6089,7 @@ MonoBehaviour:
   volume: 1
   showDialogOnInteract: 1
   dialogTitle: "\u63D0\u95EE\uFF08\u9650\u65F610\u79D2\uFF09"
-  dialogContent: "\u795D\u4F60\u73A9\u5F97\u5F00\u5FC3"
+  dialogContent: "\u795D\u4F60\u73A9\u5F97\u5F00\u5FC3~"
   dialogDisplayTime: 10
   dialogBackgroundColor: {r: 0, g: 0, b: 0, a: 0.8}
   dialogTitleColor: {r: 1, g: 1, b: 1, a: 1}
