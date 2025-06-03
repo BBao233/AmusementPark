@@ -3,34 +3,25 @@ using UnityEngine.SceneManagement;
 
 public class PlayerHealthMonitor : MonoBehaviour
 {
-    [Header("玩家设置")]
-    public Health player1Health;  // 玩家1的Health组件
-    public Health player2Health;  // 玩家2的Health组件
+    [Header("共享血量设置")]
+    public Health sharedHealth;  // 共享的Health组件
 
     [Header("场景设置")]
     public string gameOverSceneName = "GameOver";  // 游戏结束场景名称
     public float sceneSwitchDelay = 2f;  // 死亡后切换场景的延迟时间
 
-    private bool isChecking = true;
+    private bool hasTriggeredGameOver = false;
 
     void Update()
     {
-        if (!isChecking) return;
+        if (hasTriggeredGameOver || sharedHealth == null) return;
 
-        // 检查两个玩家是否都死亡
-        if (player1Health.currentHealth <= 0 && player2Health.currentHealth <= 0)
+        if (sharedHealth.currentHealth <= 0)
         {
-            AllPlayersDead();
+            hasTriggeredGameOver = true;
+            Debug.Log("共享血量耗尽，切换至游戏结束场景");
+            Invoke("SwitchToGameOverScene", sceneSwitchDelay);
         }
-    }
-
-    void AllPlayersDead()
-    {
-        isChecking = false;  // 停止检测
-        Debug.Log("所有玩家都已死亡，即将切换场景");
-
-        // 延迟后切换场景
-        Invoke("SwitchToGameOverScene", sceneSwitchDelay);
     }
 
     void SwitchToGameOverScene()
