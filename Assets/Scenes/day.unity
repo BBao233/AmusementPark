@@ -773,8 +773,8 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 8abfc9bdeb6b6b14aa9e26eeda5a5a4f, type: 3}
-    m_FontSize: 20
-    m_FontStyle: 0
+    m_FontSize: 36
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
@@ -829,8 +829,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 65, y: -35}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 65, y: -65}
+  m_SizeDelta: {x: 150, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &668239466
 MonoBehaviour:
@@ -854,8 +854,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.41568628, g: 0.41568628, b: 0.41568628, a: 1}
+    m_PressedColor: {r: 0.41568628, g: 0.41568628, b: 0.41568628, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -896,8 +896,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: -360592943, guid: 5fed05826501b9b418261ec8bd5ffe0f, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1215,8 +1215,8 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 8abfc9bdeb6b6b14aa9e26eeda5a5a4f, type: 3}
-    m_FontSize: 20
-    m_FontStyle: 0
+    m_FontSize: 36
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
@@ -1504,8 +1504,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -65, y: -35}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -71.2, y: -65}
+  m_SizeDelta: {x: 150, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1061742710
 MonoBehaviour:
@@ -1529,8 +1529,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.41568628, g: 0.41568628, b: 0.41568628, a: 1}
+    m_PressedColor: {r: 0.41509432, g: 0.41509432, b: 0.41509432, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -1583,8 +1583,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: -360592943, guid: 5fed05826501b9b418261ec8bd5ffe0f, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -2854,7 +2854,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.61960787}
   m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!1 &1141285728
@@ -3002,7 +3002,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1154981474
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3019,8 +3019,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00033855, y: 0.0020465}
-  m_SizeDelta: {x: 1380, y: 718.1}
+  m_AnchoredPosition: {x: -0.0012012, y: 0.0010207}
+  m_SizeDelta: {x: 1392.4, y: 730.48}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1154981475
 MonoBehaviour:
@@ -3074,7 +3074,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pollutionImage: {fileID: 1154981475}
   pollutionPanel: {fileID: 1206133807}
-  maxClearTime: 10
+  maxClearTime: 9
   clearSpeedSingle: 1.5
   clearSpeedDouble: 3
 --- !u!1 &1190563981
@@ -3740,7 +3740,7 @@ Transform:
   m_GameObject: {fileID: 1359247903}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.2259, y: -0.3135, z: 0}
+  m_LocalPosition: {x: 6.2259, y: 0.25, z: 0}
   m_LocalScale: {x: 18, y: 9, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4259,7 +4259,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 275295198, guid: 06d9483cf7dc4fb47b6414e95907f2bd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4343,7 +4343,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -15}
+  m_AnchoredPosition: {x: 0, y: 20}
   m_SizeDelta: {x: 500, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1802493130
@@ -4368,7 +4368,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 8abfc9bdeb6b6b14aa9e26eeda5a5a4f, type: 3}
-    m_FontSize: 15
+    m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -4400,7 +4400,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.79607844}
   m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
 --- !u!1 &1806718765
@@ -4624,13 +4624,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfc4b428920ec4b4b878b488a0fb90b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  signMessage: "\u6E38\u73A9\u987B\u77E5\n1. \u53CC\u751F\u6E38\u4E50\u56ED\u53EA\u5728\u767D\u5929\u5F00\u653E\uFF08\u5B58\u5728\uFF09\uFF0C\u8BF7\u4E8E\u6BCF\u65E518\uFF1A13\u524D\u79BB\u5F00\u56ED\u533A\u3002\r\n2.
-    \u56ED\u533A\u5185\u6CA1\u6709\u6469\u5929\u8F6E\u548C\u65CB\u8F6C\u6728\u9A6C\u3002\r\n3.
-    \u8FDB\u5165\u9B3C\u5C4B\u540E\uFF0C\u8BF7\u6309\u7167\u6307\u793A\u884C\u52A8\uFF0C\u8FD9\u662F\u79BB\u5F00\u6E38\u4E50\u56ED\u7684\u5FC5\u7ECF\u4E4B\u8DEF\u3002\r\n4.
-    \u82E5\u5728\u56ED\u533A\u5185\u8FF7\u8DEF\u5E76\u65E0\u6CD5\u79BB\u5F00\u56ED\u533A\uFF0C\u8BF7\u7ACB\u5373\u524D\u5F80\u9B3C\u5C4B\u3002\r\n5.
-    \u56ED\u533A\u5185\u6CA1\u6709\u5C0F\u4E11\uFF0C\u5982\u9047\u5230\u5C0F\u4E11\u8BF7\u5C3D\u5FEB\u8FDC\u79BB\u3002\n6.
-    \u56ED\u533A\u5185\u6709\u514D\u8D39\u53D1\u653E\u6C14\u7403\u7684\u5C0F\u4E11\uFF0C\u6E38\u5BA2\u53EF\u968F\u610F\u9886\u53D6\u6C14\u7403\u3002\r\n7.
-    \u6E38\u4E50\u56ED\u4E50\u8DA3\u591A\u591A\uFF0C\u6B22\u8FCE\u5927\u5BB6\u524D\u6765\u6E38\u73A9\u3002"
+  signMessage: "\u6E38\u73A9\u987B\u77E5\n1. \u53CC\u751F\u6E38\u4E50\u56ED\u53EA\u5728\u767D\u5929\u5F00\u653E\uFF08\u5B58\u5728\uFF09\uFF0C\u8BF7\u4E8E\u6BCF\u65E518\uFF1A13\u524D\u79BB\u5F00\u56ED\u533A\r\n2.
+    \u56ED\u533A\u5185\u6CA1\u6709\u6469\u5929\u8F6E\u548C\u65CB\u8F6C\u6728\u9A6C\r\n3.
+    \u8FDB\u5165\u9B3C\u5C4B\u540E\uFF0C\u8BF7\u6309\u7167\u6307\u793A\u884C\u52A8\uFF0C\u8FD9\u662F\u79BB\u5F00\u6E38\u4E50\u56ED\u7684\u5FC5\u7ECF\u4E4B\u8DEF\r\n4.
+    \u82E5\u5728\u56ED\u533A\u5185\u8FF7\u8DEF\u5E76\u65E0\u6CD5\u79BB\u5F00\u56ED\u533A\uFF0C\u8BF7\u7ACB\u5373\u524D\u5F80\u9B3C\u5C4B\r\n5.
+    \u56ED\u533A\u5185\u6CA1\u6709\u5C0F\u4E11\uFF0C\u5982\u9047\u5230\u5C0F\u4E11\u8BF7\u5C3D\u5FEB\u8FDC\u79BB\n5.
+    \u56ED\u533A\u5185\u6709\u514D\u8D39\u53D1\u653E\u6C14\u7403\u7684\u5C0F\u4E11\uFF0C\u6E38\u5BA2\u53EF\u968F\u610F\u9886\u53D6\u6C14\u7403\n13.
+    \u6D88\u9664\u6C61\u67D3\uFF1A\u7537\u6027\u6E38\u5BA2\u4F7F\u7528E\u952E\uFF0C\u5973\u6027\u6E38\u5BA2\u4F7F\u7528L\u952E\r\n8.
+    \u6E38\u4E50\u56ED\u4E50\u8DA3\u591A\u591A\uFF0C\u6B22\u8FCE\u5927\u5BB6\u524D\u6765\u6E38\u73A9"
   displayText: {fileID: 1802493130}
   uiPanel: {fileID: 1417830412}
   uiOffset: {x: 0, y: 2, z: 0}
@@ -4719,7 +4720,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f976dab0ffd1bc948b51c538c9bbbf50, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4803,7 +4804,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 1d37a801be29c6c43a10978521c08346, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.9
+  m_Volume: 0.858
   m_Pitch: 1
   Loop: 1
   Mute: 0

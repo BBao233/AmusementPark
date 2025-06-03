@@ -86,7 +86,7 @@ public class DoorInteraction : MonoBehaviour
 
         promptText.gameObject.SetActive(true);
         promptText.color = activeTextColor;
-        promptText.text = "按 E/L 进入下一场景"; // 可自定义提示内容
+        promptText.text = "按 E/L 进入鬼屋"; // 可自定义提示内容
     }
 
     private void HidePrompt()
