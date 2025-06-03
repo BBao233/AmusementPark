@@ -1,49 +1,55 @@
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
-public class EagleRandomMovement : MonoBehaviour
+public class fly : MonoBehaviour
 {
-    public float speed = 4f; // 老鹰飞行的速度
-    public float minX = -2.35f; // 矩形区域最小X坐标
-    public float maxX = 2.35f; // 矩形区域最大X坐标
-    public float minY = -1f; // 矩形区域最小Y坐标
-    public float maxY = 2.2f; // 矩形区域最大Y坐标
+    // 移动参数
+    public float speed = 4f;
+    public float minX = -2.35f;
+    public float maxX = 2.35f;
+    public float minY = -1f;
+    public float maxY = 1.5f;
 
-    private Vector2 currentDirection; // 当前飞行方向向量
-    private float directionChangeInterval = 1.2f; // 改变方向的时间间隔（单位：秒）
-    private float timeSinceLastDirectionChange = 0f; // 距离上次改变方向经过的时间
+    // 生命值参数
+    public float maxHealth = 100f;
+    private float currentHealth;
+    public Slider healthSlider; // 引用血条Slider
+
+    private Vector2 currentDirection;
+    private float directionChangeInterval = 1.2f;
+    private float timeSinceLastDirectionChange = 0f;
 
     private void Start()
     {
-        // 初始化一个随机的飞行方向向量
+        currentHealth = maxHealth;
         currentDirection = Random.insideUnitCircle.normalized;
+
+        // 初始化血条
+        if (healthSlider != null)
+        {
+            healthSlider.maxValue = maxHealth;
+            healthSlider.value = currentHealth;
+        }
     }
 
     private void Update()
     {
-        // 计算距离上次改变方向经过的时间
+        // 移动逻辑
         timeSinceLastDirectionChange += Time.deltaTime;
-
-        // 判断是否到了改变方向的时间
         if (timeSinceLastDirectionChange >= directionChangeInterval)
         {
-            // 重新生成一个随机的飞行方向向量
             currentDirection = Random.insideUnitCircle.normalized;
             timeSinceLastDirectionChange = 0f;
         }
 
-        // 根据当前方向和速度计算位移量
         Vector2 movement = currentDirection * speed * Time.deltaTime;
-
-        // 更新老鹰的位置
         Vector2 newPosition = (Vector2)transform.position + movement;
-
-        // 限制老鹰在指定矩形区域内
         newPosition.x = Mathf.Clamp(newPosition.x, minX, maxX);
         newPosition.y = Mathf.Clamp(newPosition.y, minY, maxY);
-
         transform.position = newPosition;
 
-        // 根据飞行方向调整老鹰的面向方向（通过localScale的x分量来控制）
+        // 方向翻转
         if (currentDirection.x < 0)
         {
             transform.localScale = new Vector3(1.4f, transform.localScale.y, transform.localScale.z);
@@ -52,5 +58,35 @@ public class EagleRandomMovement : MonoBehaviour
         {
             transform.localScale = new Vector3(-1.4f, transform.localScale.y, transform.localScale.z);
         }
+    }
+
+    // 减少BOSS生命值
+    public void TakeDamage(float damageAmount)
+    {
+        currentHealth = Mathf.Max(0, currentHealth - damageAmount);
+
+        // 更新血条
+        if (healthSlider != null)
+        {
+            healthSlider.value = currentHealth;
+        }
+
+        if (currentHealth <= 0)
+        {
+            // BOSS死亡逻辑
+            Destroy(gameObject);
+        }
+    }
+
+    // 获取当前生命值（供血条文本显示使用）
+    public float GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+
+    // 获取最大生命值（供血条文本显示使用）
+    public float GetMaxHealth()
+    {
+        return maxHealth;
     }
 }

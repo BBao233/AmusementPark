@@ -164,7 +164,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scythePrefab: {fileID: 4687501673174091910}
   launchForce: 8
-  playerTransform: {fileID: 0}
+  playerTransforms:
+  - {fileID: 0}
+  - {fileID: 0}
   launchInterval: 1.3
   activationRange: 6
   groundLayer:
@@ -180,7 +182,7 @@ Animator:
   m_GameObject: {fileID: 4687501673174091910}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 29d7085418f8a7c4f86438c35ae11575, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

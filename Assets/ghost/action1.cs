@@ -13,10 +13,6 @@ public class action1 : MonoBehaviour
     public float playerJumpSpeed;
     [Header("跳跃次数")]
     public float playerjumpCount;
-    [Header("倍率相关")]
-    public float jumpMultiplier = 1;
-    [Header("时间相关")]
-    public float crouchTime;
     [Header("判断")]
     public bool isground;
     public bool pressjump;
@@ -69,7 +65,10 @@ public class action1 : MonoBehaviour
         // 模拟地面摩擦力：无输入时直接重置水平速度
         if (isground && Mathf.Abs(horizontalNum) < 0.01f)
         {
-            playerRB.velocity = new Vector2(0, playerRB.velocity.y);
+            playerRB.velocity = new Vector2(
+                Mathf.Lerp(playerRB.velocity.x, 0, Time.fixedDeltaTime * 10), // 10为摩擦系数（可调整）
+                playerRB.velocity.y
+            );
             playerAnim.SetFloat("run", 0);
             return; // 直接返回，不再执行后续移动逻辑
         }
@@ -79,7 +78,7 @@ public class action1 : MonoBehaviour
 
         if (faceNum != 0)
         {
-            transform.localScale = new Vector3(faceNum * 1.5f, transform.localScale.y, transform.localScale.z);
+            transform.localScale = new Vector3(faceNum * 1.3f, transform.localScale.y, transform.localScale.z);
         }
     }
 
@@ -87,18 +86,18 @@ public class action1 : MonoBehaviour
     {
         if(isground)
         {
-            playerjumpCount = 2;
+            playerjumpCount = 1;
         }
         if (pressjump && isground)
         {
             pressjump = false;
-            playerRB.velocity = new Vector2(playerRB.velocity.x, playerJumpSpeed * jumpMultiplier);
+            playerRB.velocity = new Vector2(playerRB.velocity.x, playerJumpSpeed * 1);
             playerjumpCount--;
         }
         else if (pressjump && playerjumpCount > 0 && !isground)
         {
             pressjump = false;
-            playerRB.velocity = new Vector2(playerRB.velocity.x, playerJumpSpeed * jumpMultiplier);
+            playerRB.velocity = new Vector2(playerRB.velocity.x, playerJumpSpeed * 1);
             playerjumpCount--;
         }
     }
@@ -108,30 +107,16 @@ public class action1 : MonoBehaviour
         if (pressedCrouch && isground)
         {
             iscrouch = true;
-            playerColl.size = new Vector2(playerSizeVector.x, playerSizeVector.y * 0.7f);
-            playerColl.offset = new Vector2(playerOffsetVector.x, playerOffsetVector.y * 0.7f);
-            playerMoveSpeed = 3;
+            playerColl.size = new Vector2(playerSizeVector.x, playerSizeVector.y * 0.6f);
+            playerColl.offset = new Vector2(playerOffsetVector.x, playerOffsetVector.y * 0.6f);
+            playerMoveSpeed = 2;
         }
         else
         {
             iscrouch = false;
             playerColl.size = new Vector2(playerSizeVector.x, playerSizeVector.y);
             playerColl.offset = new Vector2(playerOffsetVector.x, playerOffsetVector.y);
-            playerMoveSpeed = 7;
-        }
-        if (iscrouch)
-        {
-            crouchTime += Time.deltaTime;
-            if (crouchTime >= 2)
-            {
-                crouchTime = 2;
-            }
-            jumpMultiplier = 1 + crouchTime * 0.25f;
-        }
-        else
-        {
-            crouchTime = 0;
-            jumpMultiplier = 1;
+            playerMoveSpeed = 4;
         }
     }
     void FixedUpdateCheck()
@@ -177,6 +162,12 @@ public class action1 : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "enemy")
+        {
+            playerAnim.SetTrigger("hurt");
+            audioSource.Play();
+            StartCoroutine(LoadSceneAfterSound("Boss"));
+        }
+        else if (collision.gameObject.tag == "shadowM")
         {
             playerAnim.SetTrigger("hurt");
             audioSource.Play();
