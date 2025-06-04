@@ -7,6 +7,7 @@ public class SwitchInteractFinal : MonoBehaviour
     public GameObject door; // 要打开的门对象
     public string promptText = "按下 E/L 激活开关"; // 提示文字
     public string actionText = "某处的铁门打开了"; // 动作提示
+    public AudioClip switchSound; // 开关音效
 
     [Header("UI 设置")]
     public Text displayText;       // 共用的 Text 组件
@@ -15,10 +16,14 @@ public class SwitchInteractFinal : MonoBehaviour
 
     private bool isViewing = false;
     private bool doorOpened = false;
+    private AudioSource audioSource; // 音频播放源
 
     void Start()
     {
         HideUIElements();
+        // 获取或添加 AudioSource 组件
+        audioSource = GetComponent<AudioSource>() ?? gameObject.AddComponent<AudioSource>();
+        audioSource.playOnAwake = false; // 确保不自动播放音效
     }
 
     void Update()
@@ -61,6 +66,12 @@ public class SwitchInteractFinal : MonoBehaviour
         if (door != null)
         {
             door.SetActive(false);
+        }
+
+        // 播放开关音效
+        if (switchSound != null)
+        {
+            audioSource.PlayOneShot(switchSound);
         }
 
         // 显示“铁门打开了”提示

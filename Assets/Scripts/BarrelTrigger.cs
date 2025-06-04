@@ -5,6 +5,7 @@ public class BarrelTrigger : MonoBehaviour
 {
     [Header("控制对象")]
     public GameObject barrier;       // 栏杆对象
+    public AudioClip triggerSound; // 激活开关音效
 
     [Header("UI 设置")]
     public Text displayText;         // 共用的 Text 组件
@@ -13,10 +14,14 @@ public class BarrelTrigger : MonoBehaviour
 
     private bool isViewing = false;
     private bool triggerActivated = false;
+    private AudioSource audioSource; // 音频播放源
 
     void Start()
     {
         HideUIElements();
+        // 获取或添加 AudioSource 组件
+        audioSource = GetComponent<AudioSource>() ?? gameObject.AddComponent<AudioSource>();
+        audioSource.playOnAwake = false; // 确保不自动播放音效
     }
 
     void Update()
@@ -58,6 +63,12 @@ public class BarrelTrigger : MonoBehaviour
         // 栏杆消失
         if (barrier != null)
             barrier.SetActive(false);
+
+        // 播放激活开关音效
+        if (triggerSound != null)
+        {
+            audioSource.PlayOneShot(triggerSound);
+        }
 
         // 显示提示信息
         displayText.text = "栏杆打开，箱子落下";
