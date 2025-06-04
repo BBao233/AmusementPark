@@ -21,6 +21,10 @@ public class HealthShow : MonoBehaviour
         {
             UpdateHealthText();
         }
+        else
+        {
+            healthText.text = "0" + " / " + "100";
+        }
     }
 
     void UpdateHealthText()

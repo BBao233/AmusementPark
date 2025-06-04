@@ -8,6 +8,8 @@ TagManager:
   - enemy
   - shadowWM
   - shadowM
+  - Female
+  - Male
   layers:
   - Default
   - TransparentFX
@@ -17,8 +19,8 @@ TagManager:
   - UI
   - ground
   - shadow
-  - 
-  - 
+  - Player
+  - Ladder
   - 
   - 
   - 

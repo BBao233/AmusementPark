@@ -10,6 +10,10 @@ public class fly : MonoBehaviour
     public float maxX = 2.35f;
     public float minY = -1f;
     public float maxY = 1.5f;
+    public static int bossFlag;
+
+    // 新增：通关门引用
+    public GameObject exitDoor;
 
     // 生命值参数
     public float maxHealth = 100f;
@@ -22,6 +26,7 @@ public class fly : MonoBehaviour
 
     private void Start()
     {
+        bossFlag = 0;
         currentHealth = maxHealth;
         currentDirection = Random.insideUnitCircle.normalized;
 
@@ -31,6 +36,10 @@ public class fly : MonoBehaviour
             healthSlider.maxValue = maxHealth;
             healthSlider.value = currentHealth;
         }
+
+        // 确保通关门初始状态为禁用
+        if (exitDoor != null)
+            exitDoor.SetActive(false);
     }
 
     private void Update()
@@ -73,6 +82,11 @@ public class fly : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            // 激活通关门
+            if (exitDoor != null)
+                exitDoor.SetActive(true);
+
+            bossFlag = 1;
             // BOSS死亡逻辑
             Destroy(gameObject);
         }

@@ -11,8 +11,8 @@ public class TeleporterEntry : MonoBehaviour
 
     [Header("提示UI设置")]
     public bool createPromptUI = true;
-    public string malePromptText = "按E传送";
-    public string femalePromptText = "按L传送";
+    public string malePromptText = "按L传送";
+    public string femalePromptText = "按E传送";
     public Color malePromptColor = Color.blue;
     public Color femalePromptColor = Color.magenta;
     public float promptOffsetY = 1.2f;
@@ -57,12 +57,12 @@ public class TeleporterEntry : MonoBehaviour
         }
 
         // 检查传送输入
-        if (maleInRange && Input.GetKeyDown(KeyCode.E))
+        if (maleInRange && Input.GetKeyDown(KeyCode.L))
         {
             TeleportPlayer("Male");
         }
 
-        if (femaleInRange && Input.GetKeyDown(KeyCode.L))
+        if (femaleInRange && Input.GetKeyDown(KeyCode.E))
         {
             TeleportPlayer("Female");
         }

@@ -69,7 +69,7 @@ public class LadderClimbing2D_Exit : MonoBehaviour
         // 禁用重力
         rb.gravityScale = 0;
 
-        // 更新动画
+        // 更新动画 - 仅使用isClimbing参数
         if (animator != null)
         {
             animator.SetBool("isClimbing", true);
@@ -95,12 +95,6 @@ public class LadderClimbing2D_Exit : MonoBehaviour
             // 无输入时，允许玩家脱离梯子（但保持爬梯状态）
             rb.velocity = Vector2.zero;
         }
-
-        // 更新动画
-        if (animator != null)
-        {
-            animator.SetFloat("climbSpeed", Mathf.Abs(verticalInput));
-        }
     }
 
     private void ExitLadder()
@@ -114,11 +108,10 @@ public class LadderClimbing2D_Exit : MonoBehaviour
         // 应用微小的向上速度，避免立即踩到梯子底部碰撞器
         rb.velocity = new Vector2(rb.velocity.x, 0.5f);
 
-        // 更新动画
+        // 更新动画 - 仅使用isClimbing参数
         if (animator != null)
         {
             animator.SetBool("isClimbing", false);
-            animator.SetFloat("climbSpeed", 0);
         }
     }
 }

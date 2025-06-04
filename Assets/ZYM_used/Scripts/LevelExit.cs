@@ -75,7 +75,7 @@ public class LevelExit : MonoBehaviour
         // 如果满足条件且按下交互键，则进入下一关
         if (canExit && (Input.GetKeyDown(interactKey1) || Input.GetKeyDown(interactKey2)))
         {
-            SceneManager.LoadScene(nextSceneName);
+            SceneManager.LoadScene("Boss");
         }
     }
 
@@ -139,7 +139,7 @@ public class LevelExit : MonoBehaviour
 
             if (maleInRange && femaleInRange)
             {
-                text.text = $"按{interactKey1}键或{interactKey2}键\n进入{nextSceneName}";
+                text.text = $"按{interactKey1}键或{interactKey2}键进入{nextSceneName}";
                 text.color = Color.white;
             }
             else if (maleInRange && !femaleInRange)

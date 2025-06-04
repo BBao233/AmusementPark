@@ -13,6 +13,7 @@ public class Boss : MonoBehaviour
     public LayerMask groundLayer; // µÿ√ÊÕº≤„
     private float alltime;
     public static int flag = 0;
+    
 
     private float timer;
     private bool isPlayerInRange;
@@ -26,6 +27,11 @@ public class Boss : MonoBehaviour
 
     private void Update()
     {
+        flag = fly.bossFlag;
+        if(flag == 1 )
+        {
+            Destroy( gameObject );
+        }
         CheckPlayersInRange();
 
         if (isPlayerInRange)

@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/aa.unity
     guid: f7b326e3f537d6547ab5ea3b324f316b
   - enabled: 1
-    path: Assets/Test.unity
+    path: Assets/ZYM_used/Test.unity
     guid: d6a954a59cb37534883e4b3e6ec97e41
+  - enabled: 1
+    path: Assets/ghost/Boss.unity
+    guid: b1cfb34a6e501ff45b4b23c747e9a6f3
   m_configObjects: {}
